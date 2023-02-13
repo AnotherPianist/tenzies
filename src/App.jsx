@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import Die from "./components/Die";
 
 function App() {
   const [dice, setDice] = useState(randomDice());
   const [tenzies, setTenzies] = useState(false);
+
+  useEffect(() => {
+    const val = dice[0].value;
+    if (dice.every(die => die.locked && die.value === val)) setTenzies(true);
+  }, [dice]);
 
   function randomDieValue() {
     return Math.ceil(Math.random() * 6);
